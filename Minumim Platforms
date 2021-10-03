@@ -1,0 +1,46 @@
+Given arrival and departure times of all trains that reach a railway station. Find the minimum number of platforms required for the railway station so that no train is kept waiting.
+Consider that all the trains arrive on the same day and leave on the same day. Arrival and departure time can never be the same for a train but we can have arrival time of one train equal to departure time of the other. At any given instance of time, same platform can not be used for both departure of a train and arrival of another train. In such cases, we need different platforms.
+
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class GFG {
+	public static void main (String[] args)throws IOException{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int t = Integer.parseInt(br.readLine());
+		for(int ii=0;ii<t;ii++){
+		    int n = Integer.parseInt(br.readLine());
+		    int a[] = new int[n];
+		    int d[] = new int[n];
+		    StringTokenizer st = new StringTokenizer(br.readLine());
+		    for(int i=0;i<n;i++){
+		        a[i] = Integer.parseInt(st.nextToken());
+		    }
+		    st = new StringTokenizer(br.readLine());
+		    for(int i=0;i<n;i++){
+		        d[i] = Integer.parseInt(st.nextToken());
+		    }
+		    Arrays.sort(a);
+		    Arrays.sort(d);
+		    int req = 1;
+		    int j = 0;
+		    int i = 1;
+		    int max = 1;
+		    while(i<n && j<n){
+		        if(a[i]<=d[j]){
+		            req++;
+		            i++;
+		        }
+		        else{
+		            j++;
+		            req--;
+		        }
+		        max = Math.max(max,req);
+		    }
+		    System.out.println(max);
+		}
+	}
+}
+
