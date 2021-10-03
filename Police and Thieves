@@ -1,0 +1,73 @@
+Given an array of size n such that each element contains either a 'P' for policeman or a 'T' for thief. Find the maximum number of thieves that can be caught by the police. 
+Keep in mind the following conditions :
+
+1.    Each policeman can catch only one thief.
+2.    A policeman cannot catch a thief who is more than K units away from him.
+
+//Initial Template for Java
+
+import java.io.*;
+import java.util.*; 
+
+
+ // } Driver Code Ends
+
+
+//User function Template for Java
+
+class Solution 
+{ 
+    static int catchThieves(char arr[], int n, int k) 
+	{ 
+	    ArrayList<Integer>poi = new ArrayList<>();
+	    ArrayList<Integer>thi = new ArrayList<>();
+	    for(int i=0;i<n;i++){
+	        if(arr[i] == 'P'){
+	            poi.add(i);
+	        }
+	        else{
+	            thi.add(i);
+	        }
+	    }
+	    int ans = 0;
+	    int l = 0;
+	    int r = 0;
+	    while(l<thi.size() && r<poi.size()){
+	        if(Math.abs(poi.get(r)-thi.get(l))<=k){
+	            l++;
+	            r++;
+	            ans++;
+	        }
+	        else if(poi.get(r)<thi.get(l)){
+	            r++;
+	        }
+	        else{
+	            l++;
+	        }
+	    }
+	    return ans;
+	} 
+} 
+
+
+
+// { Driver Code Starts.
+class GFG{
+    public static void main(String args[]) throws IOException {
+        Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
+
+        while(t > 0)
+        {
+            int n = sc.nextInt();
+            int k = sc.nextInt();
+			char arr[] = new char[n];
+			for(int i=0; i<n; i++)
+         		arr[i] = sc.next().charAt(0);
+
+			Solution ob = new Solution();
+            System.out.println(ob.catchThieves(arr, n, k));
+            t--;
+        }
+    }
+}         // } Driver Code Ends
