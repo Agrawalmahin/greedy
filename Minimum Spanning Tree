@@ -1,0 +1,96 @@
+Given a weighted, undirected and connected graph of V vertices and E edges. The task is to find the sum of weights of the edges of the Minimum Spanning Tree.
+
+import java.util.*;
+import java.io.*;
+import java.lang.*;
+
+class DriverClass
+{
+    public static void main(String args[]) throws IOException {
+
+        BufferedReader read =
+            new BufferedReader(new InputStreamReader(System.in));
+        int t = Integer.parseInt(read.readLine());
+        while (t-- > 0) {
+            String str[] = read.readLine().trim().split(" ");
+            int V = Integer.parseInt(str[0]);
+            int E = Integer.parseInt(str[1]);
+    
+            ArrayList<ArrayList<ArrayList<Integer>>> adj = new ArrayList<ArrayList<ArrayList<Integer>>>();
+            for(int i=0;i<V;i++)
+            {
+                adj.add(new ArrayList<ArrayList<Integer>>());
+            }
+            
+            int i=0;
+            while (i++<E) {
+                String S[] = read.readLine().trim().split(" ");
+                int u = Integer.parseInt(S[0]);
+                int v = Integer.parseInt(S[1]);
+                int w = Integer.parseInt(S[2]);
+                ArrayList<Integer> t1 = new ArrayList<Integer>();
+                ArrayList<Integer> t2 = new ArrayList<Integer>();
+                t1.add(v);
+                t1.add(w);
+                t2.add(u);
+                t2.add(w);
+                adj.get(u).add(t1);
+                adj.get(v).add(t2);
+            }
+            
+            Solution ob = new Solution();
+            
+            System.out.println(ob.spanningTree(V, adj));
+        }
+    }
+}// } Driver Code Ends
+
+
+// User function Template for Java
+
+class Solution
+{
+    //Function to find sum of weights of edges of the Minimum Spanning Tree.
+     static int minKey(int key[], Boolean mstSet[],int V)
+    {
+        // Initialize min value
+        int min = Integer.MAX_VALUE, min_index = -1;
+  
+        for (int v = 0; v < V; v++)
+            if (mstSet[v] == false && key[v] < min) {
+                min = key[v];
+                min_index = v;
+            }
+  
+        return min_index;
+    }
+    static int spanningTree(int V, ArrayList<ArrayList<ArrayList<Integer>>> adj) 
+    {
+        int parent[] = new int[V];
+        int key[] = new int[V];
+        Boolean mstSet[] = new Boolean[V];
+        for (int i = 0; i < V; i++) {
+            key[i] = Integer.MAX_VALUE;
+            mstSet[i] = false;
+        }
+        key[0] = 0;
+        parent[0] = -1; 
+        for (int count = 0; count < V - 1; count++) {
+            int u = minKey(key, mstSet,V);
+            mstSet[u] = true;
+            ArrayList<ArrayList<Integer>>B = adj.get(u);
+           for(int j=0;j<B.size();j++){
+                int v = B.get(j).get(0);
+                if(!mstSet[v] && key[u] != Integer.MAX_VALUE && B.get(j).get(1)<key[v]){
+                    parent[v] = u;
+                    key[v] = B.get(j).get(1);
+                }
+           }
+        }
+        int sum = 0;
+        for(int i=0;i<V;i++){
+            sum+=key[i];
+        }
+        return sum;
+    }
+}
