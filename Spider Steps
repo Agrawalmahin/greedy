@@ -1,0 +1,37 @@
+A spider present at the bottom of the well of height H, needs to get out of it. The walls of the well are very slippery. In each step, it climbs U metres and slips down D metres. If in the last step, the spider gets out of the well by climbing U metres, it does not slip back. Find the number of steps the spider takes.
+
+
+//Initial Template for Java
+
+import java.io.*;
+import java.util.*;
+import java.lang.*;
+
+class GFG{
+    public static void main(String args[])throws IOException
+    {
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        int t = Integer.parseInt(in.readLine());
+        while(t-- > 0){
+            String arr[] = in.readLine().trim().split("\\s+");
+            int H = Integer.parseInt(arr[0]);
+            int U = Integer.parseInt(arr[1]);
+            int D = Integer.parseInt(arr[2]);
+            
+            Solution ob = new Solution();
+            System.out.println(ob.minStep(H, U, D));
+        }
+    }
+}// } Driver Code Ends
+
+
+//User function Template for Java
+
+class Solution{
+    static int minStep(int H, int U, int D){
+        // code here
+        int steps=1;
+        steps+=((H-D)/(U-D));
+        return steps;
+    }
+}
